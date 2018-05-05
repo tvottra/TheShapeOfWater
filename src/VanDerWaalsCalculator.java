@@ -2,6 +2,7 @@ import java.io.*;
 import java.util.*;
 
 public class VanDerWaalsCalculator {
+	//p + a(n/V)^2(V - nb) = n * R * T;
 	Gas[] gases = new Gas[62];
 	
 	public VanDerWaalsCalculator() {
