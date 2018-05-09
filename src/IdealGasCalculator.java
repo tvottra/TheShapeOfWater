@@ -64,7 +64,7 @@ public class IdealGasCalculator {
 		return n * R * T / P;
 	}
 
-	public double calculateN(double P, double V, double T) {
+	public static double calculateN(double P, double V, double T) {
 		return P * V / (R * T);
 	}
 

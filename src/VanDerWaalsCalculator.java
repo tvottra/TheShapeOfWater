@@ -103,7 +103,14 @@ public class VanDerWaalsCalculator {
 	}
 
 	public double calculateN(double P, double V, double T, double a, double b) {
-		return P * V / (R * T);
+		double n = IdealGasCalculator.calculateN(P, V, T);
+		for (int i = 0; i < 10; i++) {
+			double numerator = (P + (a * Math.pow(n, 2)) / (Math.pow(V, 2))) * (V - (n * b)) - (n * R * T);
+			double denominator = ((2 * a * n) / V) - ((3 * a * b * Math.pow(n, 2)) / (Math.pow(V, 2))) - (b * P)
+					- (R * T);
+			n = n - (numerator / denominator);
+		}
+		return n;
 	}
 
 	public double calculateT(double P, double V, double n, double a, double b) {
