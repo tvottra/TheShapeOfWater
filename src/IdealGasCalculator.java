@@ -2,8 +2,9 @@ import java.util.Scanner;
 
 public class IdealGasCalculator {
 	//PV = nRT;
-	private final double R = 0.082057;
-
+	private final static double R = 0.082057;
+	
+	
 	public IdealGasCalculator() {
 		double P, V, n, T;
 		Scanner in = new Scanner(System.in);
@@ -59,11 +60,11 @@ public class IdealGasCalculator {
 		return n * R * T / V;
 	}
 
-	public double calculateV(double P, double n, double T) {
+	public static double calculateV(double P, double n, double T) {
 		return n * R * T / P;
 	}
 
-	public double calculateN(double P, double V, double T) {
+	public static double calculateN(double P, double V, double T) {
 		return P * V / (R * T);
 	}
 
