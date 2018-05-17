@@ -10,20 +10,20 @@ public class VanDerWaalsCalculator {
 	// p + a(n/V)^2(V - nb) = n * R * T;
 
 	Gas[] gases = new Gas[62];
-	private final double R = 0.082057;
+	private final static double R = 0.082057;
 	private double a, b;
 
 	public VanDerWaalsCalculator() {
 		double P, V, n, T;
 		Scanner scan = new Scanner(System.in);
 		try {
-			Scanner in = new Scanner(new File("gas.txt"));
+			Scanner in = new Scanner(new File("gases.txt"));
 			for (int i = 0; i < gases.length && in.hasNext(); i++) {
 				gases[i] =
 						new Gas(
 								in.nextLine(),
 								in.nextDouble() * 0.986923,
-								in.nextDouble()); // 0.986923 to convert the bar in gas.txt to atm
+								in.nextDouble()); // 0.986923 to convert the bar in gases.txt to atm
 				in.nextLine();
 				in.nextLine();
 			}
@@ -93,8 +93,14 @@ public class VanDerWaalsCalculator {
 		System.out.println("Your " + varToSolveFor + " is " + result + " " + resultUnit);
 	}
 
-	public double calculateP(double V, double n, double T, double a, double b) {
-		return (R * T) / ((V / n) - b) - (a * Math.pow((n / V), 2));
+	public static double calculateP(double V, double n, double T, double a, double b) {
+		try {
+			System.out.println((R * T) / ((V / n) - b) - (a * Math.pow((n / V), 2)));
+			return (R * T) / ((V / n) - b) - (a * Math.pow((n / V), 2));
+		} catch (ArithmeticException e) {
+			System.out.println("Division by 0!");
+			return 0;
+		}
 	}
 
 	public double calculateV(double P, double n, double T, double a, double b) {
