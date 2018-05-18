@@ -50,7 +50,7 @@ public class Gas {
 
 	public String toString() {
 		String s = "";
-		s += "Name: " + name + "\n";
+		s += "name: " + name + "\n";
 		s += "a constant: " + a + "\n";
 		s += "b constant: " + b + "\n";
 		return s;

@@ -1,6 +1,4 @@
-/* ===================
- * Orson Charts - Demo
- * ===================
+/*
  *
  * Copyright (c) 2013-2016, Object Refinery Limited.
  * All rights reserved.
@@ -38,6 +36,7 @@
 import static javafx.application.Application.launch;
 import java.awt.Color;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
@@ -54,7 +53,7 @@ import com.orsoncharts.renderer.GradientColorScale;
 import com.orsoncharts.renderer.xyz.SurfaceRenderer;
 
 /**
- * A surface renderer demo for JavaFX.
+ * Displays a surface plot of the gas, based on its van der Waals' constants
  */
 public class Grapher extends Application {
 
@@ -73,8 +72,8 @@ public class Grapher extends Application {
 		Function3D function = new Function3D() {
 			@Override
 			public double getValue(double V, double T) {
-				double a = 5.536;
-				double b = 0.03049;
+				double a = TheShapeOfWater.getCurrentA();
+				double b = TheShapeOfWater.getCurrentB();
 				double output = VanDerWaalsCalculator.calculateP(V, 1, T, a, b);
 				if(output > 0) {
 					return VanDerWaalsCalculator.calculateP(V, 1, T, a, b);
@@ -98,7 +97,7 @@ public class Grapher extends Application {
 		SurfaceRenderer renderer = (SurfaceRenderer) plot.getRenderer();
 		renderer.setDrawFaceOutlines(false);
 		renderer.setColorScale(new GradientColorScale(new Range(-1.0, 1.0),
-				Color.RED, Color.YELLOW));
+				Color.BLUE, Color.GREEN));
 		return chart;
 	}
 
@@ -108,8 +107,13 @@ public class Grapher extends Application {
 		sp.getChildren().add(createDemoNode());
 		Scene scene = new Scene(sp, 768, 512);
 		stage.setScene(scene);
-		stage.setTitle("Orson Charts: Grapher.java");
+		stage.setTitle("PVT surface for " + TheShapeOfWater.getCurrentGas());
 		stage.show();
+
+		//close the Grapher
+		stage.setOnCloseRequest(e -> {
+			Platform.exit();
+		});
 	}
 
 	/**

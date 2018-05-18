@@ -8,94 +8,13 @@ import java.util.*;
  */
 public class VanDerWaalsCalculator {
 	// p + a(n/V)^2(V - nb) = n * R * T;
-
-	Gas[] gases = new Gas[62];
-	private final static double R = 0.082057;
-	private double a, b;
+	private static double R = TheShapeOfWater.getR();
 
 	public VanDerWaalsCalculator() {
-		double P, V, n, T;
-		Scanner scan = new Scanner(System.in);
-		try {
-			Scanner in = new Scanner(new File("gases.txt"));
-			for (int i = 0; i < gases.length && in.hasNext(); i++) {
-				gases[i] =
-						new Gas(
-								in.nextLine(),
-								in.nextDouble() * 0.986923,
-								in.nextDouble()); // 0.986923 to convert the bar in gases.txt to atm
-				in.nextLine();
-				in.nextLine();
-			}
-		} catch (Exception e) {
-			System.out.print("There is an exception\n");
-		}
-		for (int i = 0; i < gases.length; i++) {
-			if (gases[i] != null) System.out.println(gases[i]);
-		}
-
-		System.out.println("What gas would you like to use?");
-		String s = scan.nextLine();
-		for (Gas g : gases) {
-			if (s.equals(g.getName())) {
-				a = g.getA();
-				b = g.getB();
-			}
-		}
-		System.out.println("What variable would you like to solve for? P, V, n, or T?");
-		char varToSolveFor = scan.nextLine().charAt(0);
-		double result = -1;
-		String resultUnit = "";
-		switch (varToSolveFor) {
-			case 'P':
-				resultUnit = "atm";
-				System.out.println("What is V (L)?");
-				V = scan.nextDouble();
-				System.out.println("What is n (mol)?");
-				n = scan.nextDouble();
-				System.out.println("What is T (K)?");
-				T = scan.nextDouble();
-				result = calculateP(V, n, T, a, b);
-				break;
-			case 'V':
-				resultUnit = "L";
-				System.out.println("What is P (atm)?");
-				P = scan.nextDouble();
-				System.out.println("What is n (mol)?");
-				n = scan.nextDouble();
-				System.out.println("What is T (K)?");
-				T = scan.nextDouble();
-				result = calculateV(P, n, T, a, b);
-				break;
-			case 'n':
-				resultUnit = "mol";
-				System.out.println("What is P (atm)?");
-				P = scan.nextDouble();
-				System.out.println("What is V (L)?");
-				V = scan.nextDouble();
-				System.out.println("What is T (K)?");
-				T = scan.nextDouble();
-				result = calculateN(P, V, T, a, b);
-				break;
-			case 'T':
-				resultUnit = "K";
-				System.out.println("What is P (atm)?");
-				P = scan.nextDouble();
-				System.out.println("What is V (L)?");
-				V = scan.nextDouble();
-				System.out.println("What is n (mol)?");
-				n = scan.nextDouble();
-				result = calculateT(P, V, n, a, b);
-				break;
-			default:
-				throw new IllegalArgumentException("Invalid input");
-		}
-		System.out.println("Your " + varToSolveFor + " is " + result + " " + resultUnit);
 	}
 
 	public static double calculateP(double V, double n, double T, double a, double b) {
 		try {
-			System.out.println((R * T) / ((V / n) - b) - (a * Math.pow((n / V), 2)));
 			return (R * T) / ((V / n) - b) - (a * Math.pow((n / V), 2));
 		} catch (ArithmeticException e) {
 			System.out.println("Division by 0!");
@@ -103,7 +22,7 @@ public class VanDerWaalsCalculator {
 		}
 	}
 
-	public double calculateV(double P, double n, double T, double a, double b) {
+	public static double calculateV(double P, double n, double T, double a, double b) {
 		// f(V) = PV^3 + (-Pnb - nRT)V^2 + an^2V - an^3b = 0
 		// f'(V) = 3PV^2 + 2(-Pnb - nRT)V + an^2 = 0;
 		double V =
@@ -125,7 +44,7 @@ public class VanDerWaalsCalculator {
 		return V;
 	}
 
-	public double calculateN(double P, double V, double T, double a, double b) {
+	public static double calculateN(double P, double V, double T, double a, double b) {
 		// f(n) = abN^3 - aVn^2 + (V^2RT _ PbV^2)n - PV^3
 		// f'(n) = 3abn^2 - 2aVn + V^2RT + PbV^2
 
@@ -152,7 +71,19 @@ public class VanDerWaalsCalculator {
 		return n;
 	}
 
-	public double calculateT(double P, double V, double n, double a, double b) {
+	public static double calculateT(double P, double V, double n, double a, double b) {
 		return (1 / R) * (P + a * Math.pow((n / V), 2)) * ((V / n) - b);
+	}
+
+	public static double calculateCriticalV(double b) {
+		return 3 * b;
+	}
+
+	public static double calculateCriticalT(double a, double b) {
+		return (8 * a) / (27 * b * R);
+	}
+
+	public static double calculateCriticalP(double a, double b) {
+		return a / (27 * Math.pow(b, 2));
 	}
 }
