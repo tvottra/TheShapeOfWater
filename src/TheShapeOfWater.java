@@ -31,7 +31,7 @@ public class TheShapeOfWater {
 		}
 
 		boolean userIsFinished = false;
-		boolean doneCalculating = false;
+		int numOfRuns = 0;
 		do {
 			Gas myGas = null;
 			double a = -1;
@@ -117,8 +117,11 @@ public class TheShapeOfWater {
 			System.out.println("Critical pressure for the given gas is " + VanDerWaalsCalculator.calculateCriticalP(a, b));
 			System.out.println("---------------------------------------------------");
 
-			System.out.println("Displaying PVT surface plot...");
-			Grapher.main(null);
+			numOfRuns++;
+			if (numOfRuns == 1) {
+				System.out.println("Displaying PVT surface plot...");
+				Grapher.main(null);
+			}
 
 			System.out.println("\nWould you like to solve for a different gas (Y/N)?");
 			String choice = userInput.next();

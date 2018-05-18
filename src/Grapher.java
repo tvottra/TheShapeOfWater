@@ -85,7 +85,7 @@ public class Grapher extends Application {
 
 		Chart3D chart = Chart3DFactory.createSurfaceChart(
 				"Grapher",
-				"Function",
+				"van der Waals equation",
 				function, "V", "P", "T");
 
 		XYZPlot plot = (XYZPlot) chart.getPlot();
@@ -105,7 +105,7 @@ public class Grapher extends Application {
 	public void start(Stage stage) throws Exception {
 		StackPane sp = new StackPane();
 		sp.getChildren().add(createDemoNode());
-		Scene scene = new Scene(sp, 768, 512);
+		Scene scene = new Scene(sp, 1024, 768);
 		stage.setScene(scene);
 		stage.setTitle("PVT surface for " + TheShapeOfWater.getCurrentGas());
 		stage.show();
