@@ -28,3 +28,4 @@ hs_err_pid*
 out/test/
 !/lib/
 !/README.md
+/out/
