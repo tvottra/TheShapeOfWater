@@ -91,9 +91,9 @@ public class Grapher extends Application {
 		XYZPlot plot = (XYZPlot) chart.getPlot();
 		plot.setDimensions(new Dimension3D(20, 10, 20));
 		ValueAxis3D xAxis = plot.getXAxis();
-		xAxis.setRange(0, 50);
+		xAxis.setRange(0, 2000);
 		ValueAxis3D zAxis = plot.getZAxis();
-		zAxis.setRange(0, 50);
+		zAxis.setRange(0, 2000);
 		SurfaceRenderer renderer = (SurfaceRenderer) plot.getRenderer();
 		renderer.setDrawFaceOutlines(false);
 		renderer.setColorScale(new GradientColorScale(new Range(-1.0, 1.0),

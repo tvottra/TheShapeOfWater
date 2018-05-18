@@ -1,4 +1,5 @@
 import java.io.File;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class TheShapeOfWater {
@@ -47,6 +48,9 @@ public class TheShapeOfWater {
 				if (s.equals(g.getName())) {
 					myGas = g;
 				}
+			}
+			if(myGas == null) {
+				throw new NoSuchElementException("Sorry. I don't have any information on that gas.");
 			}
 			a = myGas.getA();
 			b = myGas.getB();
