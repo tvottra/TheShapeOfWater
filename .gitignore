@@ -27,3 +27,5 @@ hs_err_pid*
 .idea/vcs.xml
 .idea/workspace.xml
 out/test/
+!/lib/
+!/README.md
