@@ -35,6 +35,8 @@
 
 import static javafx.application.Application.launch;
 import java.awt.Color;
+
+import com.orsoncharts.renderer.RainbowScale;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Node;
@@ -75,8 +77,8 @@ public class Grapher extends Application {
 				double a = TheShapeOfWater.getCurrentA();
 				double b = TheShapeOfWater.getCurrentB();
 				double output = VanDerWaalsCalculator.calculateP(V, 1, T, a, b);
-				if(output > 0) {
-					return VanDerWaalsCalculator.calculateP(V, 1, T, a, b);
+				if (output > 0) {
+					return output;
 				} else {
 					return 0;
 				}
@@ -85,19 +87,20 @@ public class Grapher extends Application {
 
 		Chart3D chart = Chart3DFactory.createSurfaceChart(
 				"Grapher",
-				"van der Waals equation",
+				"Using van der Waals equation, assuming n = 1",
 				function, "V", "P", "T");
 
 		XYZPlot plot = (XYZPlot) chart.getPlot();
 		plot.setDimensions(new Dimension3D(20, 10, 20));
 		ValueAxis3D xAxis = plot.getXAxis();
-		xAxis.setRange(0, 2000);
+		xAxis.setRange(0, 50);
 		ValueAxis3D zAxis = plot.getZAxis();
-		zAxis.setRange(0, 2000);
+		zAxis.setRange(0, 400);
 		SurfaceRenderer renderer = (SurfaceRenderer) plot.getRenderer();
 		renderer.setDrawFaceOutlines(false);
 		renderer.setColorScale(new GradientColorScale(new Range(-1.0, 1.0),
 				Color.BLUE, Color.GREEN));
+
 		return chart;
 	}
 
