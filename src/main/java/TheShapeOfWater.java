@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -17,7 +18,7 @@ public class TheShapeOfWater {
 
 		//Set up the table of gases
 		try {
-			Scanner gasesInput = new Scanner(new File("gases.txt"));
+			Scanner gasesInput = new Scanner(new File("src/main/resources/gases.txt"));
 			for (int i = 0; i < gases.length && gasesInput.hasNext(); i++) {
 				gases[i] =
 						new Gas(
@@ -27,8 +28,8 @@ public class TheShapeOfWater {
 				gasesInput.nextLine();
 				gasesInput.nextLine();
 			}
-		} catch (Exception e) {
-			System.out.print("There is an exception\n");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 		}
 
 		boolean userIsFinished = false;

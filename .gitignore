@@ -29,3 +29,4 @@ out/test/
 !/lib/
 !/README.md
 /out/
+/target/
